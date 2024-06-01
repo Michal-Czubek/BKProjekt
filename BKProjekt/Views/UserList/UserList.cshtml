@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<IdentityUser>
+
+<h3>Lista użytkowników</h3>
+
+<table class="table table-secondary table-striped-columns table-hover rounded-3">
+    <thead>
+        <tr>
+            <th>
+                Użytkownik
+            </th>
+            <th>
+                Dane
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.UserName
+                </td>
+                <td>
+                    <form asp-action="BorrowsList" asp-controller="UserList" method="post" asp-route-id="@item.Id">
+                        <button type="submit" class="btn btn-success">Lista wypożyczonych książek</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

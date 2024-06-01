@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<IdentityUser>
+
+<h3>Lista bibliotekarzy</h3>
+
+<table class="table table-secondary table-striped-columns table-hover rounded-3">
+    <thead>
+        <tr>
+            <th>
+                Użytkownik
+            </th>
+            <th>
+                Ustaw jako usera
+            </th>
+            <th>
+                Usuń
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.UserName
+                </td>
+                <td>
+                <form asp-action="SetUser" method="post" asp-route-id="@item.Id">
+                    <button type="submit" class="btn btn-danger">Ustaw</button>
+                </form>
+                </td>
+                <td>
+                    <form asp-action="DeleteKeeper" method="post" asp-route-id="@item.Id">
+                        <button type="submit" class="btn btn-danger">Usuń</button>
+                    </form>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

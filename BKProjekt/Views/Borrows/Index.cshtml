@@ -1,0 +1,67 @@
+﻿@model IEnumerable<BKProjekt.Models.Borrow>
+
+@{
+    ViewData["Title"] = "Wypożyczenia książek";
+}
+
+<h1>Wypożyczenia książek</h1>
+
+<table class="table table-secondary table-striped-columns table-hover rounded-3">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BorrowDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReturnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+                <td class="btn-toolbar text-center well">
+                    @if (item.Status != "Wypożyczona" && item.Status != "Oddana" && item.Status != "Niewypożyczono")
+                    {
+                        <form asp-action="Allowed" method="post" asp-route-id="@item.Id">
+                            <button type="submit" class="btn btn-success me-1">Wypożycz</button>
+                        </form>
+                        <form asp-action="Forbid" method="post" asp-route-id="@item.Id">
+                            <button type="submit" class="btn btn-danger me-1">Zabroń</button>
+                        </form>
+                        
+                    }
+
+                    <form asp-action="Delete" method="post" asp-route-id="@item.Id">
+                        <button type="submit" class="btn btn-secondary me-1">Usuń rekord</button>
+                    </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

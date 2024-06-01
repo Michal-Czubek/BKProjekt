@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<BKProjekt.Models.Borrow>
+
+<h3>Wypożyczalnia @ViewBag.UserName</h3>
+
+<table class="table table-secondary table-striped-columns table-hover rounded-3">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BorrowDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReturnDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.BorrowDate
+                </td>
+                <td>
+                    @item.ReturnDate
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
