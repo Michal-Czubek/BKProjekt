@@ -4,7 +4,7 @@
     ViewData["Title"] = "Książki";
 }
 
-<h1>Lista książek</h1>
+<h1 class="fw-semibold">Lista książek</h1>
 
 <p>
     @if (User.IsInRole("keeper") || User.IsInRole("admin"))
@@ -13,83 +13,49 @@
     }
     
 </p>
-<table class="table table-secondary table-striped-columns table-hover rounded-3">
-    <thead>
-        <tr>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.TotalPages)
-            </th>
-            @if (User.IsInRole("keeper") || User.IsInRole("admin") || User.IsInRole("user"))
-            {
-                <th scope="col">
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            }
-            
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="card-group">
 @foreach (var item in Model) {
-        <tr>
-            <td scope="row">
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPages)
-            </td>
+
+    <div class="card" style="width: 20rem;">
+        <div class="card-body">
+                <h5 class="card-title"><b>@Html.DisplayFor(modelItem => item.Title)</b></h5>
+            <p class="card-header"><b>Autor: </b> @Html.DisplayFor(modelItem => item.Author)</p>
+                <p class="card-text"><b>Opis: </b><br />@Html.DisplayFor(modelItem => item.Description)</p>
+                <p class="card-text small"><b>Strony: </b>@Html.DisplayFor(modelItem => item.TotalPages)</p>
                 @if (User.IsInRole("keeper") || User.IsInRole("admin") || User.IsInRole("user"))
                 {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
+                    <p class="card-footer"><b>Status: </b>@Html.DisplayFor(modelItem => item.Status)</p>
                 }
-                <td class="btn-toolbar text-center well">
                     @if (User.IsInRole("user") && item.Status == "Nie")
                     {
                         <form asp-action="Borrow" method="post" asp-route-id="@item.Id">
-                            <button type="submit" class="btn btn-success me-1">Wypożycz</button>
+                        <button type="submit" class="btn btn-success m-2">Wypożycz</button>
                         </form>
                     }
 
                     @if (User.IsInRole("user") && item.Status == "Wypożyczona")
                     {
                         <form asp-action="Return" method="post" asp-route-id="@item.Id">
-                            <button type="submit" class="btn btn-info me-1">Oddaj</button>
+                        <button type="submit" class="btn btn-info m-2">Oddaj</button>
                         </form>
                     }
                     @if (User.IsInRole("keeper") || User.IsInRole("admin") || User.IsInRole("user"))
                     {
                         <form asp-action="Details" method="post" asp-route-id="@item.Id">
-                        <button type="submit" class="btn btn-secondary me-1">Szczegóły książki</button>
+                        <button type="submit" class="btn btn-secondary m-2">Szczegóły książki</button>
                         </form>
                     }
                     @if (User.IsInRole("admin") || User.IsInRole("keeper"))
                     {
                         <form asp-action="Delete" method="post" asp-route-id="@item.Id">
-                            <button type="submit" class="btn btn-danger me-1">Usuń</button>
+                        <button type="submit" class="btn btn-danger m-2">Usuń</button>
                         </form>
                         <form asp-action="Edit" method="post" asp-route-id="@item.Id">
-                            <button type="submit" class="btn btn-primary me-1">Edytuj</button>
+                        <button type="submit" class="btn btn-primary m-2">Edytuj</button>
                         </form>
                     }
-                </td>
-        </tr>
-            }
-    </tbody>
-</table>
+        </div>
+    </div>
+    
+    }
+</div>
